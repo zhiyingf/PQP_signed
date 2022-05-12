@@ -4,7 +4,7 @@
 #include <fstream>
 
 #include <io.h> 
-#include<regex>
+#include <regex>
 #include <filesystem>
 
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
@@ -23,20 +23,13 @@ TRIANGLE* Triangles;
 int numOfTriangles;
 mp4Vector* mcPoints;
 
-
+//set bounding box
 #define MINX -0.5
 #define MAXX 0.5
 #define MINY -0.5
 #define MAXY 0.5
 #define MINZ -0.5
 #define MAXZ 0.5
-
-//#define MINX -0.3
-//#define MAXX 0.3
-//#define MINY -0.3
-//#define MAXY 0.3
-//#define MINZ -0.3
-//#define MAXZ 0.3
 
 using namespace std;
 //namespace fs = std::filesystem;
@@ -83,10 +76,6 @@ void InitDataMc(PQP::Distance_OBB* obb, mesh_domain* domain, string fileName) {
 
                 //sdf[i * (nY + 1) * (nZ + 1) + j * (nZ + 1) + k] = vert.val;
 
-                ////////////////
-                //int idx = i + j * (nX + 1) + k * (nY + 1) * (nX + 1);//x y z
-                //int idx = k + j * (nZ + 1) + i * (nY + 1) * (nZ + 1);//(x,z)---(z,x)
-
                 //(x,z)---(z,x)---(nX-1-x,z)互换x,z且（x,z）逆时针旋转90°
                 int idx = (nX - i) + j * (nZ + 1) + k * (nY + 1) * (nZ + 1);//(x,z)---(z,x)---(nX-1-x,z)
 
@@ -102,6 +91,7 @@ void InitDataMc(PQP::Distance_OBB* obb, mesh_domain* domain, string fileName) {
 
 }
 
+//get *.obj file
 void getFiles(std::string path, std::vector<std::string>& files, std::vector<std::string>& filenames)
 {
     intptr_t   hFile = 0;//intptr_t和uintptr_t的类型:typedef long int； typedef unsigned long int  
@@ -121,17 +111,7 @@ void getFiles(std::string path, std::vector<std::string>& files, std::vector<std
     }
 }
 
-void MatchStr(string str, string& matStrRes, string regSearch) {
-    regex name_regex(regSearch);
-    smatch result;
-    string name_model;
-    if (regex_search(str, result, name_regex))
-    {
-        matStrRes = result.str();
-    }
-    //cout << matStrRes << endl;
-}
-
+//compute SDF - save SDF binary file - verify SDF(ie.extract surface using Marching cubes)
 void solved(const vector<string>& fileVec, const vector<string>& fileNam) {
     int i = 0;
     for (auto& v : fileVec) {
@@ -150,18 +130,6 @@ void solved(const vector<string>& fileVec, const vector<string>& fileNam) {
         mod.close();
         domain = new mesh_domain(pol);
 
-
-        //Model3D::CPoint3D pos(-0.34, -0.3, 0.223);
-        //auto dis = computeDis(obb, pos,domain);
-        //cout << dis << endl;
-        //system("pause");
-
-
-        /*string name_model;
-        MatchStr(v, name_model, "(\/(.{1,})\.)");
-        cout << name_model << endl;
-        system("pause");*/
-
         string name_model = fileNam[i++];
         name_model = name_model.substr(0, name_model.size() - 4);
         InitDataMc(obb, domain, name_model);
@@ -173,12 +141,11 @@ void solved(const vector<string>& fileVec, const vector<string>& fileNam) {
 int main()
 {
     //vector<string> fileVec = { "0","4","26","84","85","88" };
-    //vector<string> fileVec = { "0_1","4_1","26_1","84_1","85_1","88_1" };
 
     vector<string> fileVec;
     vector<string> fileNam;
     //需要读取的文件夹路径，使用单右斜杠“/”  
-    string filePath = "F:/xinCode/PQP_signed/data/a";
+    string filePath = "F:/xinCode/PQP_signed/data";
     //string filePath = "./datas"; //相对路径也可以  
     getFiles(filePath, fileVec, fileNam);
 
