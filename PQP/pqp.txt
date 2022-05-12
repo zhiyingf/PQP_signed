@@ -1,0 +1,10 @@
+//模型初始化
+Model3D::CBaseModel model("D:\\project\\mt\\mt\\model\\0397\\0397.obj");
+model.LoadModel();
+PQP::Distance_OBB* obb =  new PQP::Distance_OBB(model);
+
+//求某点投影距离
+Model3D::CPoint3D pos(1, 2, 3);
+PQP::Distance_OBB::QueryResult intersects;
+intersects = (*obb).Query(pos);
+double dis = intersects.distance;
