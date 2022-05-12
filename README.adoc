@@ -8,8 +8,8 @@ toc::[]
 The code is used for computing signed distance field using https://gamma.cs.unc.edu/SSV/[PQP] and CGAL, verifing it using https://www.angelfire.com/linux/myp/MC/index.html[Marching cube].
 
 ### Algorithm flow
-+ Compute signed distance field to save a binary file (Later you can calculate the 3D texture from the binary file through unity).
-+ To verify the signed distance field is right, extract surface using marching cubes.
+* Compute signed distance field to save a binary file (Later you can calculate the 3D texture from the binary file through unity).
+* To verify the signed distance field is right, extract surface using marching cubes.
 
 # Compiling the code
 ### Linux or OS X
