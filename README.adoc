@@ -1,0 +1,25 @@
+= Compute signed distance field using PQP and CGAL
+:toc:
+:toc-placement!:
+
+toc::[]
+
+# Introduction
+The code is used for computing signed distance field using https://gamma.cs.unc.edu/SSV/[PQP] and CGAL, verifing it using https://www.angelfire.com/linux/myp/MC/index.html[Marching cube].
+
+### Algorithm flow
++ Compute signed distance field to save a binary file (Later you can calculate the 3D texture from the binary file through unity).
++ To verify the signed distance field is right, extract surface using marching cubes.
+
+# Compiling the code
+### Linux or OS X
+The code only dependancies are https://github.com/libigl/libigl[libigl] and https://github.com/CGAL/cgal[CGAL]. We use CMake for building. If on Linux or OS X, you can build it in the terminal by doing something like:
+[source,shell]
+----
+mkdir build
+cd build
+cmake ..
+make
+----
+### Windows
+If on Windows, create a `build/` folder, and run `cmake ..` from inside that folder. This will create a visual studio solution(if you have visual studio). Launch that solution, and then simply compile the project named `Disintegration`.
